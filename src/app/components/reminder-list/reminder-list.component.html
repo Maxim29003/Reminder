@@ -1,0 +1,46 @@
+<app-navbar></app-navbar>
+<div class="bg-card text-card-foreground p-4 rounded-lg shadow-lg overflow-x-auto">
+  <table class="min-w-full divide-y divide-zinc-200">
+    <thead>
+    <tr>
+      <th class="px-6 py-3 text-left text-sm font-medium text-zinc-500 uppercase tracking-wider">Краткое описание</th>
+      <th class="px-6 py-3 text-left text-sm font-medium text-zinc-500 uppercase tracking-wider">Полное описание</th>
+      <th class="px-6 py-3 text-left text-sm font-medium text-zinc-500 uppercase tracking-wider">Дата и время создания</th>
+      <th class="px-6 py-3 text-left text-sm font-medium text-zinc-500 uppercase tracking-wider">Дата и время выполнения</th>
+      <th class="px-6 py-3 text-left text-sm font-medium text-zinc-500 uppercase tracking-wider">Статус</th>
+    </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-zinc-200">
+
+    <tr *ngFor="let reminder of reminders" (click)="selectReminder(reminder)">
+      <td class="px-6 py-4 whitespace-nowrap">{{reminder.shortDescription}}</td>
+      <td class="px-6 py-4 whitespace-nowrap">{{reminder.fullDescription}}</td>
+      <td class="px-6 py-4 whitespace-nowrap">{{reminder.creationDate | date: 'yyyy.MM.dd, HH:mm' }}</td>
+      <td class="px-6 py-4 whitespace-nowrap">{{reminder.dueDate | date: 'yyyy.MM.dd, HH:mm' }}</td>
+      <td class="px-6 py-4 whitespace-nowrap" [ngSwitch]="reminder.status.name">
+
+        <ng-container [ngSwitch]="reminder.status.name">
+  <span *ngSwitchCase="statusName.New" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+    Новый
+  </span>
+
+          <span *ngSwitchCase="statusName.Completed" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+    Исполнен
+  </span>
+
+          <span *ngSwitchCase="statusName.Planned" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+    Запланирован
+  </span>
+
+          <span *ngSwitchCase="statusName.Overdue" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+    Просрочен
+  </span>
+
+
+        </ng-container>
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
